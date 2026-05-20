@@ -1,13 +1,18 @@
-
 import yafl.SourceFile
-import yafl.parser.{Parser, Token}
-import yafl.syntax.{Syntax, TermTree, TypeTree}
+import yafl.parser.Parser
+import yafl.syntax.TermTree
+
 
 final class ParserTests extends munit.FunSuite:
 
   test("conditional"):
-    val input = SourceFile("test", "if true then 1 else 0")
+    // Create a file containing the text of the program
+    val input = SourceFile("test", "if true then 1 else 2")
+
+    // Parse the program
     val program = Parser.parse(input)
-    assert(program.value.IsInstanceOF(TermTree.Conditional))
+
+    // Assert that the value is correct type
+    assert(program.value.isInstanceOf[TermTree.Conditional])
 
 end ParserTests
