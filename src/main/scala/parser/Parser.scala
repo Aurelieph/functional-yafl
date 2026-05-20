@@ -103,6 +103,22 @@ object Parser:
   private def termIdentifier(using Context): Result[Syntax[TermTree.Variable]] =
     take(Token.identifier, "identifier")
       .map((n) => Syntax(TermTree.Variable(n.text.toString), n.span))
+    
+
+  private def conditional(using Context): Result[Syntax[TermTree.VConditional]] =
+    val x: Int = take(Token.`if`, "'if").and { (opener) =>
+      term.and { (condition) =>
+        take(Token.`then`, "'then").and { (_) =>
+          term.and { (success) =>
+            take(Token.`else`, "'else").and { (_) =>
+              term.map { (failure) =>
+                Syntax(TermTree.Conditional(condition, success, failure), opener.span.extendedToCover(failure.span))
+              }
+            }
+          }
+        }
+      }
+    }
 
   /** Parses a lambda or a parenthesized term. */
   private def lambdaOrParenthesized(using Context): Result[Syntax[TermTree]] =

@@ -21,17 +21,17 @@ The following is assumed:
 
 ```
 term ::=
-  | unit-literal
-  | boolean-literal
-  | integer-literal
-  | identifier
+  | unit-literal done
+  | boolean-literal done
+  | integer-literal done
+  | identifier done
   | term-abstraction
   | term-application
   | type-abstraction
   | type-application
   | infix-application
-  | conditional
-  | '(' term ')'
+  | conditional done
+  | '(' term ')' done
 
 unit-literal ::=
   | '(' ')'
